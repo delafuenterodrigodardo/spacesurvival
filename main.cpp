@@ -11,11 +11,11 @@ int main()
 {
     srand(time(0));
 
-    RenderWindow app(VideoMode(anchoPantalla, altoPantalla), "Space Survival");
+    RenderWindow app(VideoMode(anchoPantalla, altoPantalla), "Space Survival", Style::Fullscreen);
     app.setFramerateLimit(60);
 
     Texture t1,t2,t3,t4,t5,t6,t7;
-    t1.loadFromFile("images/spaceship1.png");
+    t1.loadFromFile("images/spaceship3.png");
     t2.loadFromFile("images/background2.jpg");
     t3.loadFromFile("images/explosions/type_C.png");
     t4.loadFromFile("images/rock.png");
@@ -63,8 +63,19 @@ int main()
              if (event.key.code == Keyboard::Space)
               {
                 bala *b = new bala();
-                b->settings(sBullet,p->x,p->y,p->angle,10);
+                b->settings(sBullet,p->x,p->y,p->angle-10,10);
                 entidades.push_back(b);
+
+                bala *b1 = new bala();
+                b1->settings(sBullet,p->x,p->y,p->angle+10,10);
+                entidades.push_back(b1);
+
+                bala *b2 = new bala();
+                b2->settings(sBullet,p->x,p->y,p->angle,10);
+                entidades.push_back(b2);
+              }
+              if (event.key.code == Keyboard::Escape){
+                app.close();
               }
         }
 
@@ -102,6 +113,7 @@ int main()
       if (a->name=="player" && b->name=="asteroide")
        if ( isCollide(a,b) )
            {
+            if (!Keyboard::isKeyPressed(Keyboard::N)){
             b->life=false;
 
             Entidad *e = new Entidad();
@@ -111,6 +123,7 @@ int main()
 
             p->settings(sPlayer,anchoPantalla/2,altoPantalla/2,0,20);
             p->dx=0; p->dy=0;
+            }
            }
      }
 

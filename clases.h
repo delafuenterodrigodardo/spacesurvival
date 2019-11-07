@@ -1,8 +1,8 @@
 #ifndef CLASES_H_INCLUDED
 #define CLASES_H_INCLUDED
 
-const int anchoPantalla = 1600;
-const int altoPantalla = 1000;
+const int anchoPantalla = 1920;
+const int altoPantalla = 1080;
 
 float GRADOSARADIANES = 0.017453f;
 
@@ -80,7 +80,7 @@ class Entidad
      circle.setFillColor(Color(255,0,0,170));
      circle.setPosition(x,y);
      circle.setOrigin(R,R);
-     //app.draw(circle);
+     ///app.draw(circle);
    }
 
    virtual ~Entidad(){};
