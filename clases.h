@@ -81,6 +81,8 @@ class Entidad
      circle.setPosition(x,y);
      circle.setOrigin(R,R);
      ///app.draw(circle);
+
+
    }
 
    virtual ~Entidad(){};
@@ -90,10 +92,13 @@ class Entidad
 class asteroide: public Entidad
 {
    public:
+
+      const int variablilidad_asteroide= 4;
+
    asteroide()
    {
-     dx=rand()%8-4;
-     dy=rand()%8-4;
+     dx=rand()%8-variablilidad_asteroide;
+     dy=rand()%8-variablilidad_asteroide;
      name="asteroide";
    }
 
@@ -112,6 +117,7 @@ class asteroide: public Entidad
 class bala: public Entidad
 {
    public:
+       bool bala_erratica= true;
    bala()
    {
      name="bala";
@@ -121,7 +127,9 @@ class bala: public Entidad
    {
      dx=cos(angle*GRADOSARADIANES)*6;
      dy=sin(angle*GRADOSARADIANES)*6;
-     // angle+=rand()%7-3;  /*try this*/
+     if (bala_erratica){
+     angle+=rand()%7-3;  /*try this*/
+     }
      x+=dx;
      y+=dy;
 
@@ -135,6 +143,8 @@ class player: public Entidad
 {
    public:
    bool thrust;
+   int maxSpeed=15;
+   int radio=2000;
 
    player()
    {
@@ -150,7 +160,7 @@ class player: public Entidad
       { dx*=0.99;
         dy*=0.99; }
 
-    int maxSpeed=15;
+
     float velocidad = sqrt(dx*dx+dy*dy);
     if (velocidad>maxSpeed)
      { dx *= maxSpeed/velocidad;
@@ -162,6 +172,7 @@ class player: public Entidad
     if (x>anchoPantalla) x=0; if (x<0) x=anchoPantalla;
     if (y>altoPantalla) y=0; if (y<0) y=altoPantalla;
    }
+   int getRadio(){return radio;}
 
 };
 
@@ -174,4 +185,47 @@ bool isCollide(Entidad *a,Entidad *b)
 }
 
 
+class Disparomejorado: public Entidad
+{
+   public:
+   Disparomejorado()
+   {
+     name="Disparomejorado";
+   }
+
+   void  update()
+   {
+     dx=cos(angle*GRADOSARADIANES)*6;
+     dy=sin(angle*GRADOSARADIANES)*6;
+     // angle+=rand()%7-3;  /*try this*/
+     x+=dx;
+     y+=dy;
+
+     if (x>anchoPantalla || x<0 || y>altoPantalla || y<0) life=0;
+   }
+};
+
+class laser: public Entidad
+{
+   public:
+   laser()
+   {
+     name="laser";
+   }
+
+   void  update()
+   {
+     dx=cos(angle*GRADOSARADIANES)*6;
+     dy=sin(angle*GRADOSARADIANES)*6;
+     // angle+=rand()%7-3;  /*try this*/
+     x+=dx;
+     y+=dy;
+
+     if (x>anchoPantalla || x<0 || y>altoPantalla || y<0) life=0;
+   }
+};
+
+
+
 #endif // CLASES_H_INCLUDED
+
